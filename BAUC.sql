@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 27-Out-2017 às 16:03
+-- Generation Time: 31-Out-2017 às 15:57
 -- Versão do servidor: 10.0.31-MariaDB-0ubuntu0.16.04.2
 -- PHP Version: 7.0.22-0ubuntu0.16.04.1
 
@@ -23,6 +23,18 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `bairro`
+--
+
+CREATE TABLE `bairro` (
+  `cod_bairro` int(11) NOT NULL,
+  `nome` int(11) NOT NULL,
+  `cod_cidade` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `categoria`
 --
 
@@ -35,6 +47,18 @@ CREATE TABLE `categoria` (
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `cidade`
+--
+
+CREATE TABLE `cidade` (
+  `cod_cidade` int(11) NOT NULL,
+  `nome` int(11) NOT NULL,
+  `cod_estado` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `endereco`
 --
 
@@ -42,9 +66,20 @@ CREATE TABLE `endereco` (
   `cod_endereco` int(11) NOT NULL,
   `CEP` text NOT NULL,
   `numero` text NOT NULL,
-  `bairro` text NOT NULL,
-  `cidade` text NOT NULL,
-  `estado` text NOT NULL
+  `cod_bairro` int(11) NOT NULL,
+  `cod_cidade` int(11) NOT NULL,
+  `cod_estado` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `estado`
+--
+
+CREATE TABLE `estado` (
+  `cod_estado` int(11) NOT NULL,
+  `uf` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -71,8 +106,17 @@ CREATE TABLE `loja` (
 --
 
 CREATE TABLE `marca` (
-  `cod_marca` int(11) NOT NULL
+  `cod_marca` int(11) NOT NULL,
+  `nome` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `marca`
+--
+
+INSERT INTO `marca` (`cod_marca`, `nome`) VALUES
+(1, 'Amanco'),
+(2, 'Tigre');
 
 -- --------------------------------------------------------
 
@@ -97,7 +141,10 @@ CREATE TABLE `produto` (
 --
 
 CREATE TABLE `relacao_produto_loja` (
-  `cod_relacao` int(11) NOT NULL
+  `cod_relacao` int(11) NOT NULL,
+  `cod_produto` int(11) NOT NULL,
+  `quantidade` int(11) NOT NULL,
+  `cod_loja` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -107,12 +154,23 @@ CREATE TABLE `relacao_produto_loja` (
 --
 
 CREATE TABLE `usuario` (
-  `cod_usuario` int(11) NOT NULL
+  `cod_usuario` int(11) NOT NULL,
+  `nome` text NOT NULL,
+  `data_nascimento` date NOT NULL,
+  `email` text NOT NULL,
+  `senha` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `bairro`
+--
+ALTER TABLE `bairro`
+  ADD PRIMARY KEY (`cod_bairro`),
+  ADD KEY `cod_cidade` (`cod_cidade`);
 
 --
 -- Indexes for table `categoria`
@@ -121,10 +179,26 @@ ALTER TABLE `categoria`
   ADD PRIMARY KEY (`cod_categoria`);
 
 --
+-- Indexes for table `cidade`
+--
+ALTER TABLE `cidade`
+  ADD PRIMARY KEY (`cod_cidade`),
+  ADD KEY `cod_estado` (`cod_estado`);
+
+--
 -- Indexes for table `endereco`
 --
 ALTER TABLE `endereco`
-  ADD PRIMARY KEY (`cod_endereco`);
+  ADD PRIMARY KEY (`cod_endereco`),
+  ADD KEY `cod_bairro` (`cod_bairro`),
+  ADD KEY `cod_cidade` (`cod_cidade`),
+  ADD KEY `cod_estado` (`cod_estado`);
+
+--
+-- Indexes for table `estado`
+--
+ALTER TABLE `estado`
+  ADD PRIMARY KEY (`cod_estado`);
 
 --
 -- Indexes for table `loja`
@@ -151,7 +225,9 @@ ALTER TABLE `produto`
 -- Indexes for table `relacao_produto_loja`
 --
 ALTER TABLE `relacao_produto_loja`
-  ADD PRIMARY KEY (`cod_relacao`);
+  ADD PRIMARY KEY (`cod_relacao`),
+  ADD KEY `cod_produto` (`cod_produto`),
+  ADD KEY `cod_loja` (`cod_loja`);
 
 --
 -- Indexes for table `usuario`
@@ -182,7 +258,7 @@ ALTER TABLE `loja`
 -- AUTO_INCREMENT for table `marca`
 --
 ALTER TABLE `marca`
-  MODIFY `cod_marca` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `cod_marca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `produto`
 --
