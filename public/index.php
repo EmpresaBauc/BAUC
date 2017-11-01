@@ -1,8 +1,4 @@
-<?php
- $conexao = mysqli_connect('localhost','root','lucas');
- $banco = mysqli_select_db($conexao,'BAUC');
- mysqli_set_charset($conexao,'utf8');
-?>
+<?php require '../database/conexao.php' ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -26,7 +22,15 @@
       }
   ?>
 
-</div>
-<body>
+  <br><br>
 
+  
+
+</div>
+
+<script src="../libs/bootstrap/js/bootstrap-3.3.7.min.js"></script>
+<script src="../libs/bootstrap/js/npm.js"></script>
+<script src="../libs/jquery/js/jquery-3.2.1.min.js"></script>
+
+</body>
 </html>
