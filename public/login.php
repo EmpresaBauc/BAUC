@@ -13,20 +13,11 @@
 </head>
 <body>
 <div class="container">
- <div class="header">
-   <h1>BAUC - Materias de Cosntruções</h1>
-   <nav>
-    <ul>
-      <li><a href="cadastro.php">Cadastro</a></li>
-      <li><a href="login.php">Login</a></li>
-    </ul>
-   </nav>
- </div>
+ login
 </div>
 
 <script src="../libs/bootstrap/js/bootstrap-3.3.7.min.js"></script>
 <script src="../libs/bootstrap/js/npm.js"></script>
 <script src="../libs/jquery/js/jquery-3.2.1.min.js"></script>
-
 </body>
 </html>
